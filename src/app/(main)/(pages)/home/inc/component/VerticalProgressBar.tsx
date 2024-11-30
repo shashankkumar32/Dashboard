@@ -1,9 +1,9 @@
 import React from "react";
 
 interface VerticalProgressBarProps {
-  value: number; // The value to fill the progress bar
-  max: number; // The maximum value of the progress bar
-  height?: number; // The height of the progress bar
+  value: number; 
+  max: number; 
+  height?: number; 
 }
 
 const VerticalProgressBar: React.FC<VerticalProgressBarProps> = ({
@@ -15,28 +15,23 @@ const VerticalProgressBar: React.FC<VerticalProgressBarProps> = ({
 
   return (
     <div
-      className="relative w-3 bg-white rounded-full overflow-hidden border"
+      className="relative xs:w-0.9 sm:w-2 lg:w-3 rounded-full overflow-hidden border"
       style={{
         height: `${height}px`,
         borderRadius: "100px",
-        border: "1px solid #E5E5E5",
+        background:" #F2F7FF"
       }}
     >
-      {/* Filled section */}
       <div
-        className="absolute bottom-0 left-0 w-full rounded-full bg-black"
+        className="absolute bottom-0 left-0 w-full rounded-full "
         style={{
           height: `${fillPercentage}%`,
+          background: "linear-gradient(356.64deg, rgba(27, 89, 248, 0.8) 48.49%, rgba(27, 89, 248, 0) 282.14%)"
+
         }}
       />
     </div>
   );
 };
 export default VerticalProgressBar
-// export default function App() {
-//   return (
-//     <div className="flex items-center justify-center h-screen bg-gray-100">
-//       <VerticalProgressBar value={150} max={700} />
-//     </div>
-//   );
-// }
+

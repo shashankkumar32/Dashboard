@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import {
+  Avatar,
   Box,
   CssBaseline,
   Divider,
@@ -10,6 +11,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -38,24 +40,19 @@ const drawerItems = [
 
 export default function LayoutWrapperSideBar({ children }: Props) {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-
   const drawer = (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        justifyContent: "space-between", // Ensures bottom content stays at the very end
+        justifyContent: "space-between", 
       }}
     >
-      {/* Top Section */}
       <Box>
-        {/* TESLA Logo */}
         <Toolbar>
           <Box component="img" src="/TESLA.png" alt="Tesla Logo" width="100%" />
         </Toolbar>
-
-        {/* List of Drawer Items */}
         <List>
           {drawerItems.map((item, index) =>
             item.heading ? (
@@ -87,14 +84,40 @@ export default function LayoutWrapperSideBar({ children }: Props) {
         </List>
       </Box>
 
-      {/* Bottom Section */}
+ 
       <Box>
         <Divider />
-        <Box sx={{ textAlign: "center", py: 2 }}>
-          <Typography variant="body2" color="text.secondary">
-            Same Wheeler
-          </Typography>
-        </Box>
+        
+    <Stack
+     sx={{mt:2}}
+    >
+      <Avatar
+        alt="Sam Wheeler"
+        src="/Photo.png"
+        sx={{
+          width: 50,
+          height: 50,
+        }}
+      />
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          fontSize="14px"
+          lineHeight="18px"
+          color="#000000"
+        >
+          Sam Wheeler
+        </Typography>
+        <Typography
+          variant="body2"
+          fontWeight={400}
+          fontSize="12px"
+          lineHeight="14.52px"
+          color="#00000080"
+        >
+          samwheeler@example.com
+        </Typography>
+    </Stack>
       </Box>
     </Box>
   );
@@ -129,7 +152,7 @@ export default function LayoutWrapperSideBar({ children }: Props) {
       <Box
         component="main"
         sx={{
-          // height: "100vh",
+          flexShrink:-4,
           bgcolor: "#F9F9F9",
           p: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -140,3 +163,5 @@ export default function LayoutWrapperSideBar({ children }: Props) {
     </Box>
   );
 }
+
+

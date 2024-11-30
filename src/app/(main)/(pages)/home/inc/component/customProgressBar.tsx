@@ -1,10 +1,10 @@
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 interface Props {
-    sx?: React.CSSProperties; // Define as an optional CSS style object
-    color1: string; // Assuming color as string
+    sx?: React.CSSProperties; 
+    color1: string; 
     color2: string;
-    value:any; // Assuming color as string
+    value:any;
   }
   
   const CustomProgressBar: React.FC<Props> = ({

@@ -1,19 +1,24 @@
-import React from 'react'
-import LayoutWrapperSideBar from '../global/wrapperSidebar'
-
+"use client";
+import React from "react";
+import { useMediaQuery } from "@mui/material"; 
+import LayoutWrapperMobileNav from "../global/mobilewrapper";
+import LayoutWrapperSideBar from "../global/wrapperSidebar";
 type Props = {
-    children:React.ReactNode
-}
+  children: React.ReactNode;
+};
+const Layout = ({ children }: Props) => {
 
-const layout = ({children}: Props) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
-    <LayoutWrapperSideBar>
-        <div>layout
+    <>
+      {isMobile ? (
+        <LayoutWrapperMobileNav>{children}</LayoutWrapperMobileNav>
+      ) : (
+        <LayoutWrapperSideBar>{children}</LayoutWrapperSideBar>
+      )}
+    </>
+  );
+};
 
-        {children}
-    </div>
-      </LayoutWrapperSideBar>
-  )
-}
-
-export default layout
+export default Layout;

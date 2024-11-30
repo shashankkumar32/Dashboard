@@ -1,43 +1,60 @@
+
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Skeleton } from "@mui/material";
 
 const MetricsLayout = () => {
   const [data, setData] = useState<any>(null);
-
-  // Fetch data from the JSON file
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/data.json"); // Path to your JSON file
+      const response = await fetch("/data.json");
       const result = await response.json();
       setData(result);
     };
     fetchData();
   }, []);
-
   if (!data) {
-    return <Typography>Loading...</Typography>; // Display loading message while fetching
-  }
+    return (
+      <Box sx={{ pt: 0, display: "block" }}>
+        {/* Top Row */}
+        <Grid container spacing={2} justifyContent="center">
+          {[...Array(3)].map((_, index) => (
+            <Grid item key={index}>
+              <Skeleton variant="rectangular" width={173} height={156.4} sx={{ borderRadius: 2 }} />
+            </Grid>
+          ))}
+        </Grid>
 
+        <Grid container spacing={2} justifyContent="center" sx={{ mt: 1 }}>
+          {[...Array(3)].map((_, index) => (
+            <Grid item key={index}>
+              <Skeleton variant="rectangular" width={173} height={156.4} sx={{ borderRadius: 2 }} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
   const topMetrics = [
-    { key: "Active Users", value: `${data.metrics.active_users.current}/${data.metrics.active_users.total}` },
+    { key: "Active Users", value: `${data?.metrics.active_users.current}/${data.metrics.active_users.total}` },
     { key: "Questions Answered", value: data.metrics.questions_answered },
     { key: "Av. Session Length", value: data.metrics.average_session_length_seconds },
   ];
 
   const bottomMetrics = [
-    { key: "Starting Knowledge", value: data.metrics.starting_knowledge_percentage },
-    { key: "Current Knowledge", value: data.metrics.current_knowledge_percentage },
-    { key: "Knowledge Gain", value: data.metrics.current_knowledge_percentage - data.metrics.starting_knowledge_percentage },
+    { key: "Starting Knowledge", value: data?.metrics.starting_knowledge_percentage +"%"},
+    { key: "Current Knowledge", value: data.metrics.current_knowledge_percentage+"%" },
+    { key: "Knowledge Gain", value: data.metrics.current_knowledge_percentage - data.metrics.starting_knowledge_percentage+"%" },
   ];
+  const GraphImage = <img src="/Graph.png" alt="Graph" />;
 
-  const renderBox = (metric: { key: string; value: number | string }) => (
+  const renderBox = (metric: { key: string; value: number | string }, children?: React.ReactNode) => (
     <Box
       sx={{
-        width: "173px",
-        height: "152.4px",
+        width: "176px",
+        height: "156.4px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between", // Space between key and value
+        justifyContent: "space-between",
         backgroundColor: "#FFFFFF",
         borderRadius: "20px",
         border: "1px solid #EFF0F6",
@@ -51,9 +68,9 @@ const MetricsLayout = () => {
           sx={{
             color: "#000000B2",
             fontWeight: 600,
-            fontSize: "14px", // Adjusted height for key text
+            fontSize: "14px",
             lineHeight: "17px",
-            textAlign: "left", // Align key text to the left
+            textAlign: "left",
           }}
         >
           {metric.key}
@@ -73,13 +90,15 @@ const MetricsLayout = () => {
           {metric.value}
         </Typography>
       </Box>
+      <Box>{children}</Box>
     </Box>
   );
 
+  
+
   return (
-    <Box sx={{ p: 2 }}>
-      {/* Top Row */}
-      <Grid container spacing={1} justifyContent="center">
+    <Box sx={{ pt: 0, display: "block" }}>
+      <Grid container spacing={2} justifyContent="center">
         {topMetrics.map((metric, index) => (
           <Grid item key={index}>
             {renderBox(metric)}
@@ -87,11 +106,10 @@ const MetricsLayout = () => {
         ))}
       </Grid>
 
-      {/* Bottom Row */}
-      <Grid container spacing={1} justifyContent="center" sx={{ mt: 1 }}>
+      <Grid container spacing={2} justifyContent="center" sx={{ mt: 1 }}>
         {bottomMetrics.map((metric, index) => (
           <Grid item key={index}>
-            {renderBox(metric)}
+            {renderBox(metric, GraphImage)}
           </Grid>
         ))}
       </Grid>

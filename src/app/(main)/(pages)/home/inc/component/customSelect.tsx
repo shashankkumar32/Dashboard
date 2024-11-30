@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, Box, Typography } from '@mui/material';
 
 const TimeFrameSelect: React.FC = () => {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<string>('ALL-time');
@@ -21,41 +21,61 @@ const TimeFrameSelect: React.FC = () => {
         fullWidth
         defaultValue="ALL-time"
         sx={{
-          borderRadius: '30px', // Smaller border radius for a more compact appearance
-          backgroundColor: '#FFFFFF', // Set background color to white
+          borderRadius: '30px', 
+          backgroundColor: '#FFFFFF', 
           border: '1px solid #EFF0F6',
-          paddingLeft: 1, // Reduce padding for a more compact look
-          height: '36px', // Set fixed height for smaller size
+          paddingLeft: 1, 
+          height: '36px', 
           '& .MuiSelect-select': {
             display: 'flex',
             alignItems: 'center',
-            padding: '0 8px', // Adjust padding for smaller size
+            padding: '0 8px', 
           },
           '& fieldset': {
-            border: 'none', // Removes the border around the select
+            border: 'none',
           },
           '&:hover': {
-            backgroundColor: '#FFFFFF', // Ensures the background stays white on hover
+            backgroundColor: '#FFFFFF', 
           },
           '&.Mui-focused': {
-            backgroundColor: '#FFFFFF', // Keeps the background white when focused
-            borderColor: '#EFF0F6', // Keeps the border color as specified
+            backgroundColor: '#FFFFFF', 
+            borderColor: '#EFF0F6', 
           },
           '& .MuiInputLabel-root': {
-            transform: 'none', // Prevents the label from squeezing when focused
-            color: '#000000', // Keeps the label color black
+            transform: 'none', 
+            color: '#000000',
           },
-          // Conditionally change border-radius when dropdown is open
+         
           ...(open && {
-            borderBottomLeftRadius: '0px', // Fully round bottom-left radius when open
-            borderBottomRightRadius: '0px', // Fully round bottom-right radius when open
+            borderBottomLeftRadius: '0px',
+            borderBottomRightRadius: '0px',
             '& .MuiMenu-paper': {
-              borderBottomLeftRadius: '60px', // Fully round bottom-left radius for the dropdown
-              borderBottomRightRadius: '60px', // Fully round bottom-right radius for the dropdown
+              borderBottomLeftRadius: '60px', 
+              borderBottomRightRadius: '60px', 
             },
           }),
         }}
-        renderValue={(selected) => `TimeFrame: ${selected}`}
+        renderValue={(selected) =><Box sx={{display:"flex"}}>
+             <Typography
+        sx={{
+      
+          fontWeight: 600,           
+          fontSize: '16px',          
+          lineHeight: '18px',        
+          letterSpacing: '-0.3px',   
+          color: '#888888', 
+          mr:1         
+        }}
+      > TimeFrame :</Typography>       <Typography
+      sx={{
+   
+        fontWeight: 300,           
+        fontSize: '16px',          
+        lineHeight: '18px',        
+        letterSpacing: '-0.3px',   
+        color: '#232323',          
+      }}
+    > {selected}</Typography> </Box>}
       >
         <MenuItem value="ALL-time">ALL-time</MenuItem>
         <MenuItem value="Last 7 Days">Last 7 Days</MenuItem>

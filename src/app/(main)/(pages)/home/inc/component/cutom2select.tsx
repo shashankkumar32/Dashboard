@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, TextField, Divider, Chip, Radio, RadioGroup, FormControlLabel, FormLabel, Box } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, TextField, Divider, Chip, Radio, RadioGroup, FormControlLabel, FormLabel, Box, Typography } from '@mui/material';
 
 const Custom2Select: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // Store selected items as chips
@@ -42,44 +42,64 @@ const Custom2Select: React.FC = () => {
         value=""
         displayEmpty
         sx={{
-            borderRadius: '30px', // Smaller border radius for a more compact appearance
-            backgroundColor: '#FFFFFF', // Set background color to white
+            borderRadius: '30px', 
+            backgroundColor: '#FFFFFF', 
             border: '1px solid #EFF0F6',
-            paddingLeft: 1, // Reduce padding for a more compact look
-            height: '36px', // Set fixed height for smaller size
+            paddingLeft: 1, 
+            height: '36px',
             '& .MuiSelect-select': {
               display: 'flex',
               alignItems: 'center',
-              padding: '0 8px', // Adjust padding for smaller size
+              padding: '0 8px', 
             },
             '& fieldset': {
-              border: 'none', // Removes the border around the select
+              border: 'none', 
             },
             '&:hover': {
-              backgroundColor: '#FFFFFF', // Ensures the background stays white on hover
+              backgroundColor: '#FFFFFF', 
             },
             '&.Mui-focused': {
-              backgroundColor: '#FFFFFF', // Keeps the background white when focused
-              borderColor: '#EFF0F6', // Keeps the border color as specified
+              backgroundColor: '#FFFFFF', 
+              borderColor: '#EFF0F6', 
             },
             '& .MuiInputLabel-root': {
-              transform: 'none', // Prevents the label from squeezing when focused
-              color: '#000000', // Keeps the label color black
+              transform: 'none', 
+              color: '#000000', 
             },
-            // Conditionally change border-radius when dropdown is open
+            
             ...(open && {
-              borderBottomLeftRadius: '0px', // Fully round bottom-left radius when open
-              borderBottomRightRadius: '0px', // Fully round bottom-right radius when open
+              borderBottomLeftRadius: '0px', 
+              borderBottomRightRadius: '0px', 
               '& .MuiMenu-paper': {
-                borderBottomLeftRadius: '60px', // Fully round bottom-left radius for the dropdown
-                borderBottomRightRadius: '60px', // Fully round bottom-right radius for the dropdown
+                borderBottomLeftRadius: '60px',
+                borderBottomRightRadius: '60px', 
               },
             }),
           }}
 
-        renderValue={()=>`People: Multiple Selected`}
+        renderValue={()=> <Box sx={{display:"flex"}}>
+        <Typography
+   sx={{
+ 
+     fontWeight: 600,           
+     fontSize: '16px',          
+     lineHeight: '18px',        
+     letterSpacing: '-0.3px',   
+     color: '#888888', 
+     mr:1         
+   }}
+ >People :</Typography>       <Typography
+ sx={{
+
+   fontWeight: 300,           
+   fontSize: '16px',          
+   lineHeight: '18px',        
+   letterSpacing: '-0.3px',   
+   color: '#232323',          
+ }}
+>  Multiple Selected</Typography> </Box>}
       >
-        {/* Display selected items as chips */}
+        
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '4px', padding: '8px' }}>
           {selectedItems.map((item, index) => (
             <Chip
@@ -95,7 +115,7 @@ const Custom2Select: React.FC = () => {
           ))}
         </Box>
 
-        {/* Search Bar */}
+  
         <TextField
           fullWidth
           size="small"
@@ -113,10 +133,10 @@ const Custom2Select: React.FC = () => {
           }}
         />
 
-        {/* Divider */}
+
         <Divider sx={{ margin: '8px 0' }} />
 
-        {/* Groups Section */}
+       
         <Box sx={{ marginBottom: '2px' ,px:3}}>
           <FormLabel component="legend">Groups</FormLabel>
           <RadioGroup value={groupSelection} onChange={handleGroupChange}>
@@ -128,7 +148,7 @@ const Custom2Select: React.FC = () => {
 
         <Divider sx={{ margin: '4px 0' }} />
 
-        {/* Users Section */}
+    
         <Box sx={{ marginBottom: '8px',px:3 }}>
           <FormLabel component="legend">Users</FormLabel>
           <RadioGroup value={userSelection} onChange={handleUserChange}>

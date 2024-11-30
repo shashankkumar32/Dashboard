@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography, Stack, Skeleton } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const GroupsLeaderboard: React.FC = () => {
   const [groupsLeaderboardData, setGroupsLeaderboardData] = useState<any>([]);
 
-  // Fetch the data from the JSON file
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        const response = await fetch('/data.json'); // File in public directory
+        const response = await fetch('/data.json');
         const data = await response.json();
-        setGroupsLeaderboardData(data.groups_leaderboard); // Using the data from the JSON file
+        setGroupsLeaderboardData(data.groups_leaderboard); 
       } catch (error) {
         console.error('Error fetching leaderboard data:', error);
       }
@@ -31,7 +30,6 @@ const GroupsLeaderboard: React.FC = () => {
         padding: 2,
       }}
     >
-      {/* Heading */}
       <Typography
         variant="h6"
         sx={{
@@ -45,8 +43,6 @@ const GroupsLeaderboard: React.FC = () => {
       >
         Groups Leaderboard
       </Typography>
-
-      {/* Leaderboard Entries */}
       <Stack spacing={2} sx={{ marginTop: 2 }}>
         {groupsLeaderboardData.length > 0 ? (
           groupsLeaderboardData.map((group: any, index: number) => (
@@ -60,7 +56,6 @@ const GroupsLeaderboard: React.FC = () => {
                 borderRadius: '5px',
               }}
             >
-              {/* Name and Details */}
               <Box sx={{ flexGrow: 1 }}>
                 <Typography
                   sx={{
@@ -95,8 +90,6 @@ const GroupsLeaderboard: React.FC = () => {
                   </Typography>
                 </Box>
               </Box>
-
-              {/* Triangle Indicator */}
               <Box
                 sx={{
                   display: 'flex',
@@ -113,7 +106,29 @@ const GroupsLeaderboard: React.FC = () => {
             </Box>
           ))
         ) : (
-          <Typography>No data available</Typography>
+          <>
+            {[...Array(4)].map((_, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  padding: 1,
+                  borderRadius: '5px',
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Skeleton variant="text" width="100%" height={15} sx={{ marginBottom: 1 }} />
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Skeleton variant="text" width="30%" height={10} />
+                    <Skeleton variant="text" width="30%" height={10} />
+                  </Box>
+                </Box>
+                <Skeleton variant="rectangular" width={24} height={24} />
+              </Box>
+            ))}
+          </>
         )}
       </Stack>
     </Box>

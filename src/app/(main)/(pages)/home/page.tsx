@@ -1,153 +1,153 @@
+
 "use client";
-import React from 'react';
-import { Box, Typography, Button, Divider } from '@mui/material';
-import DownloadIcon from '@mui/icons-material/Download';
-import CustomBarChart from './inc/component/CustomBarChart';
-import MetricsLayout from './inc/box';
-import WeakestTopics from './inc/weakestTopics';
-import { Grid } from "@mui/material";
-import StrongestTopics from './inc/strongestTopics';
-import IndividualLeaderboard from './inc/IndividualLeaderboard';
-import GroupsLeaderboard from './inc/groupLeaderboard';
-import VerticalProgressBar from './inc/component/VerticalProgressBar';
-import VerticalMeter from './inc/component/customverticalmeter';
-import BarComponent from './inc/barComponent';
-import TimeFrameSelect from './inc/component/customSelect';
-import Custom2Select from './inc/component/cutom2select';
-import Custom3Select from './inc/component/custom3select';
+
+import React from "react";
+import { Box, Typography, Button, Divider, Grid } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
+import MetricsLayout from "./inc/box";
+import WeakestTopics from "./inc/weakestTopics";
+import StrongestTopics from "./inc/strongestTopics";
+import IndividualLeaderboard from "./inc/IndividualLeaderboard";
+import GroupsLeaderboard from "./inc/groupLeaderboard";
+import BarComponent from "./inc/barComponent";
+import Custom2Select from "./inc/component/cutom2select";
+import Custom3Select from "./inc/component/custom3select";
+import TimeFrameSelect from "./inc/component/customSelect";
 
 const Page = () => {
   const handleDownload = async () => {
     try {
-      // Fetch the data.json file from the public folder
-      const response = await fetch('/data.json');
-      const data = await response.json();
 
-      // Extract the api_secret value
+      const response = await fetch("/data.json");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data.json");
+      }
+      const data = await response.json();
       const apiSecret = data.api_secret;
 
       if (!apiSecret) {
-        console.error("API secret not found");
-        return;
+        throw new Error("API secret not found in data.json");
       }
 
-      // Prepare the POST request to send the api_secret
-      const postResponse = await fetch('https://testd5-img.azurewebsites.net/api/imgdownload', {
-        method: 'POST',
+      const postResponse = await fetch("/api/imgdownload", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ api: apiSecret }), // Send the api_secret in the body
+        body: JSON.stringify({ api: apiSecret }),
       });
 
       if (!postResponse.ok) {
-        console.error('Failed to fetch image');
-        return;
+        throw new Error(`Failed to fetch image: ${postResponse.status}`);
       }
 
-      // Parse the response to get the Base64 image string
+
       const imageData = await postResponse.json();
-      const base64Image = imageData.image; // Assuming the response contains the Base64 string under "image"
+      const base64Image = imageData.base64_string;
+      const filename = imageData.filename || "downloaded_image.png";
 
       if (!base64Image) {
-        console.error('No image data returned');
-        return;
+        throw new Error("No image data returned from the API");
       }
-
-      // Create a downloadable link for the image
-      const link = document.createElement('a');
-      link.href = `data:image/png;base64,${base64Image}`; // Use the appropriate MIME type
-      link.download = 'downloaded_image.png'; // Name of the downloaded file
-      link.click(); // Trigger the download
+      const link = document.createElement("a");
+      link.href = `data:image/png;base64,${base64Image}`;
+      link.download = filename;
+      link.click();
     } catch (error) {
-      console.error('Error fetching data or downloading image:', error);
+      console.error("Error fetching or downloading image:", error);
     }
   };
 
   return (
-    <Box sx={{ padding: '16px' }}>
-      {/* Header Section */}
-      <Box 
+    <Box sx={{ padding: { xs: "0px", md: "16px" } }}>
+   
+      <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '16px'
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "16px",
         }}
       >
-        {/* Heading */}
         <Typography
           sx={{
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: "Inter, sans-serif",
             fontWeight: 700,
-            fontSize: '24px',
-            lineHeight: '29.05px',
-            color: '#000', // Black color for the text
+            fontSize: "24px",
+            lineHeight: "29.05px",
+            color: "#000",
           }}
         >
           Report
         </Typography>
 
-        {/* Download Button */}
         <Button
-          startIcon={<DownloadIcon sx={{ color: '#000' }} />} // Black icon
+          startIcon={<DownloadIcon sx={{ color: "#000" }} />}
           sx={{
-            textTransform: 'none',
-            color: '#000', // Black text
+            textTransform: "none",
+            color: "#000",
             padding: 0,
-            minWidth: 'auto', // Ensures no unnecessary padding
-            background: 'none', // Blends with the background
-            boxShadow: 'none', // Removes shadow
-            '&:hover': {
-              background: 'none', // Prevents hover effect background
+            minWidth: "auto",
+            background: "none",
+            boxShadow: "none",
+            "&:hover": {
+              background: "none",
             },
           }}
-          onClick={handleDownload} // Handle the download click
+          onClick={handleDownload}
         >
           Download
         </Button>
       </Box>
-          <Box sx={{display:"flex"}}>
-      <TimeFrameSelect />
-< Custom2Select/>
 
-      <Custom3Select/>
-          </Box>
-
-      {/* Divider */}
+     
       <Divider />
-      <Box sx={{ p: 2 }}>
-        <Grid container spacing={4}>
-          {/* Metrics Layout */}
-          <Grid item xs={12} md={6}>
-            <MetricsLayout />
-          </Grid>
-
-          {/* Custom Bar Chart */}
-          <Grid item xs={12} md={6}>
-            <BarComponent />
-          </Grid>
+      <Box sx={{ my: 2 }}>
+      <Grid container spacing={2} justifyContent="space-between" alignItems="center">
+        <Grid item xs={12} sm={5} md={4}>
+          <TimeFrameSelect />
         </Grid>
+        <Grid item xs={12} sm={5} md={4}>
+          <Custom2Select />
+        </Grid>
+        <Grid item xs={12} sm={5} md={4}>
+          <Custom3Select />
+        </Grid>
+      </Grid>
+    </Box>
+      <Box sx={{ p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            mb: 4,
+            gap: 4,
+            "@media (max-width: 1410px)": {
+              flexDirection: "column",
+            },
+          }}
+        >
+          <Box sx={{ flex: 1, minWidth: "300px" }}>
+            <MetricsLayout />
+          </Box>
+          <Box sx={{ flex: 1, minWidth: "300px" }}>
+            <BarComponent />
+          </Box>
+        </Box>
 
         <Grid container spacing={4}>
-          {/* Weakest Topics */}
           <Grid item xs={12} md={6}>
             <WeakestTopics />
           </Grid>
-
-          {/* Strongest Topics */}
           <Grid item xs={12} md={6}>
             <StrongestTopics />
           </Grid>
         </Grid>
 
         <Grid container sx={{ mt: 2 }} spacing={4}>
-          {/* Individual Leaderboard */}
           <Grid item xs={12} md={6}>
             <IndividualLeaderboard />
           </Grid>
-
-          {/* Groups Leaderboard */}
           <Grid item xs={12} md={6}>
             <GroupsLeaderboard />
           </Grid>

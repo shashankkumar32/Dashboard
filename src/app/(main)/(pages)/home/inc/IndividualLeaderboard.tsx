@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography, Stack, Skeleton } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const IndividualLeaderboard: React.FC = () => {
-  // State to store the fetched leaderboard data
   const [userLeaderboardData, setUserLeaderboardData] = useState<any[]>([]);
-
-  // Fetching the JSON data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Replace with your JSON file path
         const response = await fetch('/data.json');
         const data = await response.json();
-        setUserLeaderboardData(data.user_leaderboard); // Assuming the data structure in the JSON
+        setUserLeaderboardData(data.user_leaderboard); 
       } catch (error) {
         console.error('Error fetching leaderboard data:', error);
       }
@@ -33,7 +29,6 @@ const IndividualLeaderboard: React.FC = () => {
         padding: 2,
       }}
     >
-      {/* Heading */}
       <Typography
         variant="h6"
         sx={{
@@ -47,8 +42,6 @@ const IndividualLeaderboard: React.FC = () => {
       >
         Individual Leaderboard
       </Typography>
-
-      {/* Leaderboard Entries */}
       <Stack spacing={1} sx={{ marginTop: 2 }}>
         {userLeaderboardData.length > 0 ? (
           userLeaderboardData.map((user, index) => (
@@ -62,7 +55,6 @@ const IndividualLeaderboard: React.FC = () => {
                 borderRadius: '5px',
               }}
             >
-              {/* Circular Image */}
               <img
                 src={user.image}
                 alt={user.name}
@@ -73,7 +65,6 @@ const IndividualLeaderboard: React.FC = () => {
                 }}
               />
 
-              {/* Name and Details */}
               <Box sx={{ flexGrow: 1 }}>
                 <Typography
                   sx={{
@@ -108,8 +99,6 @@ const IndividualLeaderboard: React.FC = () => {
                   </Typography>
                 </Box>
               </Box>
-
-              {/* Triangle Indicator */}
               <Box
                 sx={{
                   display: 'flex',
@@ -126,7 +115,30 @@ const IndividualLeaderboard: React.FC = () => {
             </Box>
           ))
         ) : (
-          <Typography sx={{ color: '#7f7f7f' }}>Loading...</Typography>
+          <>
+            {[...Array(4)].map((_, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  padding: 1,
+                  borderRadius: '5px',
+                }}
+              >
+                <Skeleton variant="circular" width={42} height={42} />
+                <Box sx={{ flexGrow: 1 }}>
+                  <Skeleton variant="text" width="100%" height={20} sx={{ marginBottom: 1 }} />
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Skeleton variant="text" width="30%" height={14} />
+                    <Skeleton variant="text" width="30%" height={14} />
+                  </Box>
+                </Box>
+                <Skeleton variant="rectangular" width={24} height={24} />
+              </Box>
+            ))}
+          </>
         )}
       </Stack>
     </Box>
