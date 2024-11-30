@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
     "@mui/material": "^6.1.9",
     "@tabler/icons-react": "^3.23.0",
     "clsx": "^2.1.1",
