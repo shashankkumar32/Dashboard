@@ -1,27 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
-const data = {
-  metrics: {
-    active_users: { current: 27, total: 80 },
-    questions_answered: 3298,
-    average_session_length_seconds: 154,
-    starting_knowledge_percentage: 64,
-    current_knowledge_percentage: 86,
-  },
-};
-
 const MetricsLayout = () => {
+  const [data, setData] = useState<any>(null);
+
+  // Fetch data from the JSON file
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/data.json"); // Path to your JSON file
+      const result = await response.json();
+      setData(result);
+    };
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <Typography>Loading...</Typography>; // Display loading message while fetching
+  }
+
   const topMetrics = [
-    { key: "Current/27", value: `${data.metrics.active_users.current}/27` },
-    { key: "Total Users", value: data.metrics.active_users.total },
+    { key: "Active Users", value: `${data.metrics.active_users.current}/${data.metrics.active_users.total}` },
     { key: "Questions Answered", value: data.metrics.questions_answered },
+    { key: "Av. Session Length", value: data.metrics.average_session_length_seconds },
   ];
 
   const bottomMetrics = [
-    { key: "Average Session ", value: data.metrics.average_session_length_seconds },
-    { key: "Start Knowledge ", value: data.metrics.starting_knowledge_percentage },
-    { key: "Current Knowledge ", value: data.metrics.current_knowledge_percentage },
+    { key: "Starting Knowledge", value: data.metrics.starting_knowledge_percentage },
+    { key: "Current Knowledge", value: data.metrics.current_knowledge_percentage },
+    { key: "Knowledge Gain", value: data.metrics.current_knowledge_percentage - data.metrics.starting_knowledge_percentage },
   ];
 
   const renderBox = (metric: { key: string; value: number | string }) => (
@@ -39,40 +45,41 @@ const MetricsLayout = () => {
         padding: 2,
       }}
     >
-      <Typography
-        variant="body2"
-        sx={{
-          color: "#4d4d4d",
-          fontWeight: 600,
-          // fontFamily: "Inter",
-          fontSize: "14px", // Adjusted height for key text
-          lineHeight: "17px",
-          textAlign: "left", // Align key text to the left
-        }}
-      >
-        {metric.key}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{
-          color: "#000000",
-          fontWeight: 700,
-          fontFamily: "Inter",
-          fontSize: "24px",
-          lineHeight: "29.05px",
-          marginTop: 1,
-          textAlign: "center",
-        }}
-      >
-        {metric.value}
-      </Typography>
+      <Box>
+        <Typography
+          variant="body2"
+          sx={{
+            color: "#000000B2",
+            fontWeight: 600,
+            fontSize: "14px", // Adjusted height for key text
+            lineHeight: "17px",
+            textAlign: "left", // Align key text to the left
+          }}
+        >
+          {metric.key}
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            color: "#000000",
+            fontWeight: 700,
+            fontFamily: "Inter",
+            fontSize: "24px",
+            lineHeight: "29.05px",
+            marginTop: 1,
+            textAlign: "center",
+          }}
+        >
+          {metric.value}
+        </Typography>
+      </Box>
     </Box>
   );
 
   return (
     <Box sx={{ p: 2 }}>
       {/* Top Row */}
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={1} justifyContent="center">
         {topMetrics.map((metric, index) => (
           <Grid item key={index}>
             {renderBox(metric)}
@@ -81,7 +88,7 @@ const MetricsLayout = () => {
       </Grid>
 
       {/* Bottom Row */}
-      <Grid container spacing={2} justifyContent="center" sx={{ mt: 3 }}>
+      <Grid container spacing={1} justifyContent="center" sx={{ mt: 1 }}>
         {bottomMetrics.map((metric, index) => (
           <Grid item key={index}>
             {renderBox(metric)}

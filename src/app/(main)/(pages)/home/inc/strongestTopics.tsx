@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
-import CustomProgressBar from './component/customProgressBar'; // Ensure this import is correct
+import CustomProgressBar from './component/customProgressBar';
 
-const WeakestTopics: React.FC = () => {
-  const [weakestTopicsData, setWeakestTopicsData] = useState<any[]>([]);
+const StrongestTopics: React.FC = () => {
+  const [strongestTopicsData, setStrongestTopicsData] = useState<any[]>([]);
 
-  // Fetch data from JSON file
+  // Fetching the JSON data from the local file or an API endpoint
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/data.json'); // Adjust the path if needed
-        const data = await response.json();
-        setWeakestTopicsData(data.topics.weakest); // Set the weakest topics from the JSON file
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    // Fetch data from the JSON file or API
+    fetch('/data.json') // Adjust the path to where the JSON file is stored
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with the strongest topics data
+        setStrongestTopicsData(data.topics.strongest);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   return (
     <Box
       sx={{
         border: '1px solid #EFF0F6',
-        boxShadow: '0px 5px 20px 0px #0000000D',
+        boxShadow: '0px 5px 20px 0px rgba(0, 0, 0, 0.05)',
         borderRadius: 5,
         backgroundColor: '#FFFFFF',
         padding: 2,
@@ -42,12 +39,12 @@ const WeakestTopics: React.FC = () => {
           borderRadius: '5px',
         }}
       >
-        Weakest Topics
+        Strongest Topics
       </Typography>
 
       {/* Topics stacked vertically */}
       <Stack spacing={2} sx={{ marginTop: 2 }}>
-        {weakestTopicsData.map((topic, index) => (
+        {strongestTopicsData.map((topic, index) => (
           <Box
             key={index}
             sx={{
@@ -78,8 +75,8 @@ const WeakestTopics: React.FC = () => {
                 {topic.name}
               </Typography>
               <CustomProgressBar
-                color1="linear-gradient(to right, #FFDFE5 , #FFE1DE)"
-                color2="linear-gradient(143.13deg, #FFBF1A 5.36%, #FF4080 94.64%)"
+                color1="linear-gradient(to right, #E8F9E9 , #E6F7FB)"
+                color2="linear-gradient(143.13deg, #3ACB5D 5.36%, #4BADE8 94.64%)"
                 value={topic.correct_percentage}
               />
             </Box>
@@ -97,7 +94,6 @@ const WeakestTopics: React.FC = () => {
             >
               {topic.correct_percentage}%
               <Typography
-                variant="h6"
                 sx={{
                   fontWeight: 600,
                   fontSize: '14px',
@@ -115,4 +111,4 @@ const WeakestTopics: React.FC = () => {
   );
 };
 
-export default WeakestTopics;
+export default StrongestTopics;

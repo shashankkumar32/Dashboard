@@ -2,11 +2,20 @@
 import React from 'react';
 import { Box, Typography, Button, Divider } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
-import CustomBarChart from './inc/barchart';
+import CustomBarChart from './inc/component/CustomBarChart';
 import MetricsLayout from './inc/box';
 import WeakestTopics from './inc/weakestTopics';
 
 import {  Grid } from "@mui/material";
+import StrongestTopics from './inc/strongestTopics';
+import IndividualLeaderboard from './inc/IndividualLeaderboard';
+import GroupsLeaderboard from './inc/groupLeaderboard';
+import VerticalProgressBar from './inc/component/VerticalProgressBar';
+import VerticalMeter from './inc/component/customverticalmeter';
+import BarComponent from './inc/barComponent';
+import TimeFrameSelect from './inc/component/customSelect';
+
+
 const Page = () => {
 
   return (
@@ -51,7 +60,7 @@ const Page = () => {
           Download
         </Button>
       </Box>
-
+<TimeFrameSelect/>
       {/* Divider */}
       <Divider />
       <Box sx={{ p: 2 }}>
@@ -66,13 +75,47 @@ const Page = () => {
         {/* Custom Bar Chart */}
         <Grid item xs={12} md={6}>
           {/* <Paper elevation={3} sx={{ p: 3, height: '100%' }}> */}
-            <CustomBarChart />
+            <BarComponent />
+          {/* </Paper> */}
+        </Grid>
+      </Grid>
+      <Grid container spacing={4}>
+        {/* Metrics Layout */}
+        <Grid item xs={12} md={6}>
+          {/* <Paper elevation={3} sx={{ p: 3, height: '100%' }}> */}
+          <WeakestTopics/>
+          {/* </Paper> */}
+        </Grid>
+
+        {/* Custom Bar Chart */}
+        <Grid item xs={12} md={6}>
+          {/* <Paper elevation={3} sx={{ p: 3, height: '100%' }}> */}
+         
+    <StrongestTopics/>
+          {/* </Paper> */}
+        </Grid>
+      </Grid>
+      <Grid container sx={{mt:2}} spacing={4}>
+        {/* Metrics Layout */}
+        <Grid item xs={12} md={6}>
+          {/* <Paper elevation={3} sx={{ p: 3, height: '100%' }}> */}
+          <IndividualLeaderboard/>
+          {/* </Paper> */}
+        </Grid>
+
+        {/* Custom Bar Chart */}
+        <Grid item xs={12} md={6}>
+          {/* <Paper elevation={3} sx={{ p: 3, height: '100%' }}> */}
+         
+          <GroupsLeaderboard/>
           {/* </Paper> */}
         </Grid>
       </Grid>
     </Box>
+ 
+
     {/* <BorderLinearProgress variant="determinate" value={50} /> */}
-    <WeakestTopics/>
+  
     </Box>
   );
 };
