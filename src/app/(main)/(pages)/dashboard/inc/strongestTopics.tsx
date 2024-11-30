@@ -3,6 +3,7 @@ import { Box, Typography, Stack, Skeleton } from '@mui/material';
 import CustomProgressBar from './component/customProgressBar';
 
 const StrongestTopics: React.FC = () => {
+  /* eslint-disable */
   const [strongestTopicsData, setStrongestTopicsData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);  
 

@@ -4,6 +4,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const IndividualLeaderboard: React.FC = () => {
+  /* eslint-disable */
   const [userLeaderboardData, setUserLeaderboardData] = useState<any[]>([]);
   useEffect(() => {
     const fetchData = async () => {

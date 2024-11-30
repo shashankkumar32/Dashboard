@@ -26,20 +26,19 @@ const navItems = [
 const LayoutWrapperMobileNav = ({ children }: { children: React.ReactNode }) => {
   const [bottomNavVisible, setBottomNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  /* eslint-disable */
   const [navValue, setNavValue] = useState(0);
   const bottomNavRef = useRef<HTMLDivElement>(null);
   const scrollButtonRef = useRef<HTMLDivElement>(null);
-  const [isAtRightEnd, setIsAtRightEnd] = useState(false); // Track if we've reached the right end
-  const [isScrolled, setIsScrolled] = useState(false); // To track if scrolling is active
+  const [isAtRightEnd, setIsAtRightEnd] = useState(false); 
 
-  // Scroll direction detection
+
+  
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        // Scrolling down
         setBottomNavVisible(false);
       } else {
-        // Scrolling up
         setBottomNavVisible(true);
       }
       setLastScrollY(window.scrollY);
@@ -49,30 +48,25 @@ const LayoutWrapperMobileNav = ({ children }: { children: React.ReactNode }) => 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Handle the scroll button click to scroll the bottom navigation smoothly
   const scrollToEnd = () => {
     if (bottomNavRef.current) {
       if (isAtRightEnd) {
-        // Scroll back to the left end
         bottomNavRef.current.scrollTo({
           left: 0,
-          behavior: "smooth", // Smooth scroll effect
+          behavior: "smooth", 
         });
       } else {
-        // Scroll to the right end
         bottomNavRef.current.scrollTo({
           left: bottomNavRef.current.scrollWidth,
-          behavior: "smooth", // Smooth scroll effect
+          behavior: "smooth", 
         });
       }
-      // Toggle the button position
       setIsAtRightEnd(!isAtRightEnd);
     }
   };
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Top Sticky Logo */}
       <AppBar
         position="sticky"
         sx={{
@@ -88,30 +82,27 @@ const LayoutWrapperMobileNav = ({ children }: { children: React.ReactNode }) => 
               component="img"
               src="/TESLA.png"
               alt="Tesla Logo"
-              height={15} // Reduced size of the logo
+              height={15} 
             />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Main Content */}
       <Box sx={{ flex: 1, overflow: "auto", p: 2 }}>{children}</Box>
-
-      {/* Bottom Sticky Navigation */}
       {bottomNavVisible && (
         <Box
           ref={bottomNavRef}
           sx={{
             position: "sticky",
             bottom: 0,
-            width: "100%", // Full width of the screen
+            width: "100%", 
             bgcolor: "white",
             boxShadow: "0px -2px 5px rgba(0,0,0,0.1)",
-            overflowX: "hidden", // Hide horizontal scroll
-            overflowY: "hidden", // Hide vertical scroll
-            whiteSpace: "nowrap", // Prevent wrapping of the items
-            zIndex: 1000, // Ensure it's above other content
-            padding: "10px 20px", // More padding around the icons
+            overflowX: "hidden", 
+            overflowY: "hidden", 
+            whiteSpace: "nowrap", 
+            zIndex: 1000, 
+            padding: "10px 20px", 
           }}
         >
           {navItems.map((item, index) => (

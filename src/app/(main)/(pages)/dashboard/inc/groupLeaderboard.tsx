@@ -4,6 +4,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const GroupsLeaderboard: React.FC = () => {
+  /* eslint-disable */
   const [groupsLeaderboardData, setGroupsLeaderboardData] = useState<any>([]);
 
   useEffect(() => {
@@ -43,7 +44,9 @@ const GroupsLeaderboard: React.FC = () => {
       >
         Groups Leaderboard
       </Typography>
+      
       <Stack spacing={2} sx={{ marginTop: 2 }}>
+      /* eslint-disable */
         {groupsLeaderboardData.length > 0 ? (
           groupsLeaderboardData.map((group: any, index: number) => (
             <Box

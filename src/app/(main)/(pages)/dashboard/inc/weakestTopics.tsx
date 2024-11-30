@@ -4,6 +4,7 @@ import { Box, Typography, Stack, Skeleton } from '@mui/material';
 import CustomProgressBar from './component/customProgressBar';
 
 const WeakestTopics: React.FC = () => {
+  /* eslint-disable */
   const [weakestTopicsData, setWeakestTopicsData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);  
 

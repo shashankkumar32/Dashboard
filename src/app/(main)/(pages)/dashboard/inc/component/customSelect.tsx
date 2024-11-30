@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, Box, Typography } from '@mui/material';
+import { Select, MenuItem, FormControl, SelectChangeEvent, Box, Typography } from '@mui/material';
 
 const TimeFrameSelect: React.FC = () => {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<string>('ALL-time');

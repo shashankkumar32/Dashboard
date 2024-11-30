@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, TextField, Divider, Chip, Radio, RadioGroup, FormControlLabel, FormLabel, Box, Typography } from '@mui/material';
+import { Select, FormControl,  TextField, Divider, Chip, Radio, RadioGroup, FormControlLabel, FormLabel, Box, Typography } from '@mui/material';
 
 const Custom2Select: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // Store selected items as chips

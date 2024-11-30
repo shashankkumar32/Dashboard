@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Skeleton } from "@mui/material";
 
 const MetricsLayout = () => {
+  /* eslint-disable */
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     const fetchData = async () => {

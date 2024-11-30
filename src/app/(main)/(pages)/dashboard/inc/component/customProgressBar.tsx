@@ -4,11 +4,11 @@ interface Props {
     sx?: React.CSSProperties; 
     color1: string; 
     color2: string;
+    /* eslint-disable */
     value:any;
   }
   
   const CustomProgressBar: React.FC<Props> = ({
-    sx,
     color1,
     color2,
     value

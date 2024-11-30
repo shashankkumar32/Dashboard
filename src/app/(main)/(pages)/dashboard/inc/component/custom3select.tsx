@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, Typography, Box } from '@mui/material';
+import { Select, MenuItem, FormControl, SelectChangeEvent, Typography, Box } from '@mui/material';
 
 const Custom3Select: React.FC = () => {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<string>('ALL-time');
