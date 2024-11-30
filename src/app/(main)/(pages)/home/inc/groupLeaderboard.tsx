@@ -10,7 +10,7 @@ const GroupsLeaderboard: React.FC = () => {
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        const response = await fetch('/leaderboard.json'); // File in public directory
+        const response = await fetch('/data.json'); // File in public directory
         const data = await response.json();
         setGroupsLeaderboardData(data.groups_leaderboard); // Using the data from the JSON file
       } catch (error) {

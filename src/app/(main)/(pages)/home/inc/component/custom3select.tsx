@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
 
-const TimeFrameSelect: React.FC = () => {
+const Custom3Select: React.FC = () => {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<string>('ALL-time');
   const [open, setOpen] = useState<boolean>(false);
 
@@ -19,7 +19,7 @@ const TimeFrameSelect: React.FC = () => {
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         fullWidth
-        defaultValue="ALL-time"
+        defaultValue="ALL"
         sx={{
           borderRadius: '30px', // Smaller border radius for a more compact appearance
           backgroundColor: '#FFFFFF', // Set background color to white
@@ -55,7 +55,7 @@ const TimeFrameSelect: React.FC = () => {
             },
           }),
         }}
-        renderValue={(selected) => `TimeFrame: ${selected}`}
+        renderValue={(selected) => `Topics: ${selected}`}
       >
         <MenuItem value="ALL-time">ALL-time</MenuItem>
         <MenuItem value="Last 7 Days">Last 7 Days</MenuItem>
@@ -67,4 +67,4 @@ const TimeFrameSelect: React.FC = () => {
   );
 };
 
-export default TimeFrameSelect;
+export default Custom3Select;
